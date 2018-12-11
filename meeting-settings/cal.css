@@ -1,0 +1,31 @@
+.container {
+  margin-bottom:10px;
+}
+
+.day {
+  border: 1px solid gray;
+  width: 11%;
+  height: 25px;
+  padding: 1%;
+  font-weight: bold;
+  font-size: 12px;
+  position: relative;
+  float:left;
+}
+
+.weekend {
+  background-color: lightgray;
+}
+
+.selected {
+  background-color: lightblue;
+}
+
+.holiday {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin:1px;
+  color: red;
+  font-size: 8px;
+}

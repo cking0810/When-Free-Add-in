@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <title>Landing Page</title>
+
+  <!-- Office JavaScript API -->
+  <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.debug.js"></script>
+
+  <!-- LOCAL -->
+  <link rel="stylesheet" href="../node_modules/office-ui-fabric-js/dist/css/fabric.min.css" />
+  <link rel="stylesheet" href="../node_modules/office-ui-fabric-js/dist/css/fabric.components.css" />
+  <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.1/css/fabric.min.css">
+  <link rel="stylesheet" href="../helpers/jrange/jquery.range.css" />
+
+  <!-- Template styles -->
+  <link href="insert-avail.css" rel="stylesheet" type="text/css" />
+  <link href="cal.css" rel="stylesheet" type="text/css" />
+
+  <script src="../node_modules/office-ui-fabric-js/dist/js/fabric.min.js"></script>
+</head>
+
+<body class="ms-font-l ms-landing-page">
+  <main class="ms-landing-page__main">
+    <section class="ms-landing-page__content ms-font-m ms-fontColor-neutralPrimary">
+      <div id="settings-container">
+
+        <!-- Date picker-->
+        <div class="container ms-Grid">
+          <div class="ms-Grid-row">
+            <div class="day" data-day="5" data-index=""></div>
+            <div class="day" data-day="6" data-index=""> </div>
+            <div class="day" data-day="7" data-index=""></div>
+            <div class="day" data-day="8" data-index=""></div>
+            <div class="day" data-day="9" data-index=""></div>
+            <div class="day weekend" data-day="10" data-index=""></div>
+            <div class="day weekend" data-day="11" data-index=""> </div>
+          </div>
+          <div class="ms-Grid-row">
+            <div class="day" data-day="12" data-index=""></div>
+            <div class="day" data-day="13" data-index=""></div>
+            <div class="day" data-day="14" data-index=""></div>
+            <div class="day" data-day="15" data-index=""></div>
+            <div class="day" data-day="16" data-index=""></div>
+            <div class="day weekend" data-day="17" data-index=""></div>
+            <div class="day weekend" data-day="18" data-index=""></div>
+          </div>
+          <div class="ms-Grid-row">
+            <div class="day" data-day="12" data-index=""></div>
+            <div class="day" data-day="13" data-index=""></div>
+            <div class="day" data-day="14" data-index=""></div>
+            <div class="day" data-day="15" data-index=""></div>
+            <div class="day" data-day="16" data-index=""></div>
+            <div class="day weekend" data-day="17" data-index=""></div>
+            <div class="day weekend" data-day="18" data-index=""></div>
+          </div>
+        </div>
+
+        <!-- Timezone picker -->
+        <div class="ms-Dropdown" tabindex="0">
+          <i class="ms-Dropdown-caretDown ms-Icon ms-Icon--ChevronDown"></i>
+          <select class="ms-Dropdown-select" id="ddTimezone">
+            <option>EST - Eastern Standard Time (UTC-5)</option>
+            <option>CST - Central Standard Time (UTC-6)</option>
+            <option>MST - Mountain Standard Time (UTC-7)</option>
+            <option>PST - Pacific Standard Time (UTC-8)</option>
+            <option>AKST - Alaska Standard Time (UTC-9)</option>
+            <option>HST - Hawaii Standard Time (UTC-10)</option>
+          </select>
+        </div>
+
+        <!-- Meeting Length -->
+        <div class="slider-container">
+          <input type="hidden" class="slider-input single-slider" value="30" id="meetingLength" />
+        </div>
+
+        <!-- Search Contacts -->
+        <div class="search-container pt-1">
+          <div class="ms-TextField">
+            <label class="ms-Label hide">Name</label>
+            <div style="border: 1px solid #DDD;">
+              <i class="ms-Icon ms-Icon--Search" aria-hidden="true" style="padding:5px;"></i>
+              <input class="ms-TextField-field" type="text" value="" id="search" placeholder="Search Contacts" style="border:none;width:auto;" />
+            </div>
+          </div>
+          <div class="selected-contacts">
+            <span class="selected-contact">
+              Jane Doe
+              <i class="ms-Icon ms-Icon--StatusCircleErrorX remove-contact" aria-hidden="true"></i>
+            </span>
+            <span class="selected-contact">
+              John Smith
+              <i class="ms-Icon ms-Icon--StatusCircleErrorX remove-contact" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Checkbox Section -->
+        <div class="checkbox-container pt-1">
+          <!-- Protect Lunch Hour -->
+          <div class="ms-CheckBox">
+            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" id="chkLunch">
+            <label role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="false">
+              <span class="ms-Label">Protect Lunch Hour</span>
+            </label>
+          </div>
+
+          <!-- No Back-to-Backs -->
+          <div class="ms-CheckBox">
+            <input tabindex="-1" type="checkbox" class="ms-CheckBox-input" id="chkBack">
+            <label role="checkbox" class="ms-CheckBox-field" tabindex="0" aria-checked="true">
+              <span class="ms-Label">No Back-to-Backs</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="ms-Grid button-container pt-1" dir="ltr">
+          <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+              <button class="ms-Button" id="btnClear">
+                <span class="ms-Button-label">Clear</span>
+              </button>
+            </div>
+            <div class="ms-Grid-col ms-sm6 ms-md6 ms-lg6">
+              <button class="ms-Button" id="btnPlace">
+                <span class="ms-Button-label">Place</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div id="error-display" style="display: none;" class="ms-u-borderBase ms-fontColor-error ms-font-m ms-bgColor-error ms-borderColor-error">
+      </div>
+    </section>
+    <!--<button class="ms-Button ms-Button--primary" id="insert-button" disabled>
+      <span class="ms-Button-label">Insert</span>
+    </button>-->
+  </main>
+  <!--<footer class="ms-landing-page__footer ms-bgColor-themePrimary">
+    <div class="ms-landing-page__footer--left">
+      <img src="../assets/logo-filled.png" />
+      <h1 class="ms-font-xl ms-fontWeight-semilight ms-fontColor-white">Git the Gist</h1>
+    </div>
+    <div id="settings-icon" class="ms-landing-page__footer--right">
+      <i class="ms-Icon enlarge ms-Icon--Settings ms-fontColor-white"></i>
+    </div>
+  </footer>-->
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="../node_modules/showdown/dist/showdown.min.js"></script>
+  <script type="text/javascript" src="../node_modules/urijs/src/URI.min.js"></script>
+  <script type="text/javascript" src="../helpers/addin-config.js"></script>
+  <script type="text/javascript" src="../helpers/gist-api.js"></script>
+  <script type="text/javascript" src="insert-avail.js"></script>
+  <script type="text/javascript" src="cal.js"></script>
+  <script src="../helpers/jrange/jquery.range.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.single-slider').jRange({
+        from: 30,
+        to: 120,
+        step: 30,
+        scale: ['30 Min', '1 Hour', '1.5 Hour', '2 Hours'],
+        width: 200,
+        theme: 'theme-blue',
+        showLabels: false,
+        snap: true
+      });
+
+    });
+
+    function clear() {
+      $("#ddTimezone").prop("selectedIndex", 0);
+      //$("#ddTimezone").val($("#ddTimezone option:first").val());
+      $('#meetingLength').attr('value', '30');
+      $('#search').val('');
+      $('.selected-contacts').html('');
+      $('#chkLunch').prop('checked', false);
+      $('#chkBack').prop('checked', false);
+    }
+
+    // instantiate all Dropdown components on the page
+    var DropdownHTMLElements = document.querySelectorAll('.ms-Dropdown');
+    for (var i = 0; i < DropdownHTMLElements.length; ++i) {
+      var Dropdown = new fabric['Dropdown'](DropdownHTMLElements[i]);
+    }
+    // instantiate all contextual menu components on the page
+    var ContextualMenuElements = document.querySelectorAll(".ms-ContextualMenuExample");
+    for (var i = 0; i < ContextualMenuElements.length; i++) {
+      var ButtonElement = ContextualMenuElements[i].querySelector(".ms-Button");
+      var ContextualMenuElement = ContextualMenuElements[i].querySelector(".ms-ContextualMenu");
+      new fabric['ContextualMenu'](ContextualMenuElement, ButtonElement);
+    }
+    $('#length-selection li a').click(function () {
+      $('#length-text').text('Meeting Length - ' + $(this).text());
+    });
+    // instantiate all text field components on the page
+    var TextFieldElements = document.querySelectorAll(".ms-TextField");
+    for (var i = 0; i < TextFieldElements.length; i++) {
+      new fabric['TextField'](TextFieldElements[i]);
+    }
+    $('body').on('click', '.remove-contact', function () {
+      $(this).parent().remove();
+    });
+    // instantiate all check box components on the page
+    var CheckBoxElements = document.querySelectorAll(".ms-CheckBox");
+    for (var i = 0; i < CheckBoxElements.length; i++) {
+      new fabric['CheckBox'](CheckBoxElements[i]);
+    }
+    // instantiate all button components on the page
+    var ButtonElements = document.querySelectorAll(".ms-Button");
+    for (var i = 0; i < ButtonElements.length; i++) {
+      if (ButtonElements[i].id == "btnClear") {
+        new fabric['Button'](ButtonElements[i], function () {
+          clear();
+        });
+      } else if (ButtonElements[i].id == "btnPlace") {
+        new fabric['Button'](ButtonElements[i], function () {
+          // Insert Event Here
+        });
+      } else {
+        new fabric['Button'](ButtonElements[i], function () {
+          // Insert Event Here
+        });
+      }
+
+    }
+  </script>
+</body>
+
+</html>
